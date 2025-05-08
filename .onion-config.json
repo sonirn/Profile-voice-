@@ -1,0 +1,8 @@
+{
+    "HiddenServiceDir": "/var/lib/tor/hidden_service/",
+    "HiddenServicePort": [9053, "127.0.0.1:9053"],
+    "DisableNetwork": 0,
+    "StrictNodes": 1,
+    "EntryNodes": "{nl},{de},{ch}",
+    "ExitNodes": "{mx},{br},{cl}"
+}
